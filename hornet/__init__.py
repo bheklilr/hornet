@@ -1,4 +1,5 @@
-from .hornet import Hornet, Nest
+from .hornet import Hornet
+from .nest import Nest
 
 
 __all__ = [
