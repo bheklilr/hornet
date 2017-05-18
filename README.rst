@@ -1,6 +1,8 @@
 ``hornet``
 ==========
 
+**WARNING** This library is currently under development and is not functional.
+
 The hornet library aims to provide a relatively simple interface for working
 with stacking nested configurations from multiple sources.  These sources may be
 JSON files, YAML files, specially formatted environment variables, databases, or
