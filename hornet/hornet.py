@@ -2,12 +2,11 @@ from collections import Mapping, MutableMapping
 
 
 class Hornet(MutableMapping):
-    @classmethod
-    def object_pairs_hook(cls):
-        return dict
+    OBJECT_PAIRS_HOOK = dict
+
+    _underlying_mapping = OBJECT_PAIRS_HOOK()
 
     def __init__(self, items=(), **kwargs):
-        self._underlying_mapping = self.object_pairs_hook()()
         if isinstance(items, Mapping):
             items = items.items()
         for k, v in items:
@@ -20,10 +19,21 @@ class Hornet(MutableMapping):
             self._underlying_mapping[k] = v
 
     def __getitem__(self, key):
+        if isinstance(key, tuple):
+            node = self
+            for part in key:
+                node = node[part]
+            return node
         return self._underlying_mapping[key]
 
     def __setitem__(self, key, value):
-        self._underlying_mapping[key] = value
+        if isinstance(key, tuple):
+            node = self
+            for part in key[:-1]:
+                node = node[part]
+            node[key[-1]] = value
+        else:
+            self._underlying_mapping[key] = value
 
     def __delitem__(self, key):
         del self._underlying_mapping[key]
@@ -33,3 +43,9 @@ class Hornet(MutableMapping):
 
     def __len__(self):
         return len(self._underlying_mapping)
+
+    def __getattr__(self, key):
+        return self[key]
+
+    def __setattr__(self, key, value):
+        self[key] = value
