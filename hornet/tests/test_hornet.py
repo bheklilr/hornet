@@ -38,3 +38,10 @@ class TestHornet(TestCase):
     def test_len(self):
         h = Hornet(a=1, b=2)
         assert len(h) == 2
+
+    def test_nested(self):
+        h = Hornet(a={'b': 1}, c=2, d={'e': {'f': 3}})
+        assert h['a']['b'] == 1
+        assert isinstance(h['a'], Hornet)
+        assert isinstance(h['d']['e'], Hornet)
+        assert h['d']['e']['f'] == 3

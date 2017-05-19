@@ -7,7 +7,7 @@ with open('README.rst') as f:
 
 setup(
     name="hornet",
-    version="0.1.0",
+    version="0.1.1",
     description="An approach to stacking configurations made up of nested dictionaries",
     long_description=readme,
     url="https://github.com/bheklilr/hornet",
@@ -26,5 +26,5 @@ setup(
     ],
     keywords='config configuration nested stacked json yaml dict dictionary',
     packages=find_packages(exclude=['docs']),
-    test_suite='hornet.tests'
+    test_suite='hornet.tests',
 )

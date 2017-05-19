@@ -11,8 +11,12 @@ class Hornet(MutableMapping):
         if isinstance(items, Mapping):
             items = items.items()
         for k, v in items:
+            if isinstance(v, Mapping):
+                v = type(self)(v)
             self._underlying_mapping[k] = v
         for k, v in kwargs.items():
+            if isinstance(v, Mapping):
+                v = type(self)(v)
             self._underlying_mapping[k] = v
 
     def __getitem__(self, key):
